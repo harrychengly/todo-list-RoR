@@ -4,11 +4,12 @@ Rails.application.routes.draw do
       resources :listings
     end 
   end
-  
+  # resources: pages
   #set index page /root url
   root 'pages#home'
   get 'pages/about'
   get 'pages/home'
   get 'pages/contact'
   post 'pages/create'
+  delete 'pages/destroy'
 end

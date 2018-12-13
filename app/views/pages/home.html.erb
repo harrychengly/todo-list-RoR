@@ -25,7 +25,10 @@
   <div class="card-header"> <%=listing.category%> </div>
   <div class="card-body">
     <p class="card-text"><%=listing.body%></p>
-  </div>
+    <button type="button" class="btn btn-light">Edit</button>
+    <a class="btn btn-danger" href='pages/destroy?id=<%=listing.id%>' rel="nofollow" 
+    data-method="delete" data-confirm="Are you sure?">Delete</a>    
+    </div>
 </div>
 </div>
 <% end %>

@@ -30,7 +30,7 @@ end
 def destroy 
     listing = Listing.find(params[:id])
     listing.destroy
-    render json:{status:'SUCCESS', message:'Listing deleted', data:listing},status: :ok
+    redirect_to root_path
 end
 
 def update
