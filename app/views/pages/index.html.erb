@@ -1,19 +1,13 @@
 
 <div class = "container">
 <h1>Hello User, what do you have today?</h1>
-
-<form accept-charset="UTF-8" method='post' action='pages/create'>
+<form accept-charset="UTF-8" method='post' action='pages/'>
 <div class = "form-group">
-<select class="custom-select custom-select-lg mb-3">
-    <option selected>Select Category</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-</select>
+<%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }, { prompt: "Select Category" }, {:class=>"form-control form-control-lg"})%>
 <input id='listing_category' name='listing[category]' class="form-control form-control-lg" type="text" placeholder="Create new category" >
-</div>
 <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Something...">
 <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
+</div>
 </form>
 </div>
 
@@ -24,10 +18,14 @@
 <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
   <div class="card-header"> <%=listing.category%> </div>
   <div class="card-body">
-    <p class="card-text"><%=listing.body%></p>
-    <button type="button" class="btn btn-light">Edit</button>
-    <a class="btn btn-danger" href='pages/destroy?id=<%=listing.id%>' rel="nofollow" 
+    <p class="card-text"> <%=listing.body%></p>
+
+
+    <a class="btn btn-light" href='pages/<%=listing.id%>/edit' rel="nofollow">Edit</a>  
+    <a class="btn btn-danger" href='pages/<%=listing.id%>' rel="nofollow" 
     data-method="delete" data-confirm="Are you sure?">Delete</a>    
+
+    
     </div>
 </div>
 </div>

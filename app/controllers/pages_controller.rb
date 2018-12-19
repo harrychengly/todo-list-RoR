@@ -7,14 +7,13 @@ class PagesController < ApplicationController
   def contact
   end
 
-  def home
+  def index
     @listings = Listing.order('created_at DESC');
   end
 
   def show 
     listing = Listing.find(params[:id])
-    render json:{status:'SUCCESS', message:'Loaded listing', data:listing},status: :ok
-end
+  end
 
 def create 
     listing = Listing.new(listing_params)
@@ -33,13 +32,14 @@ def destroy
     redirect_to root_path
 end
 
+def edit 
+    @listing = Listing.find(params[:id])
+end
+
 def update
     listing = Listing.find(params[:id])
-    if listing.update_attributes(listing_params)
-        render json:{status:'SUCCESS', message:'Updated listing', data:listing},status: :ok
-    else
-        render json:{status:'ERROR', message:'Listing not updated', data:listing.errors},status: :unprocessable_entity
-    end
+    listing.update_attributes(listing_params)
+    redirect_to root_path
 end
 
 private 
