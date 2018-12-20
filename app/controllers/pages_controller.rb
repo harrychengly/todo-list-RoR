@@ -26,6 +26,13 @@ def create
 
 end
 
+def new
+  respond_to do |format|
+    format.html
+    format.js
+  end
+end
+
 def destroy 
     listing = Listing.find(params[:id])
     listing.destroy

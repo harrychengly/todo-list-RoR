@@ -1,15 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Todo List</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
+<form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
+<div class = "form-group">
+<%= link_to 'Create New Category', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary'}  %>
+  <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+</div>
+</form>
+</nav>
+
 
 <div class = "container">
 <h1>Hello User, what do you have today?</h1>
 <form accept-charset="UTF-8" method='post' action='pages/'>
 <div class = "form-group">
 <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }, { prompt: "Select Category" }, {:class=>"form-control form-control-lg"})%>
-<input id='listing_category' name='listing[category]' class="form-control form-control-lg" type="text" placeholder="Create new category" >
 <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Something...">
 <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
 </div>
 </form>
-</div>
+</div> 
+
+
 
 <div class= "container" style="margin-top:100px;">
 <div class="row">
@@ -19,17 +42,22 @@
   <div class="card-header"> <%=listing.category%> </div>
   <div class="card-body">
     <p class="card-text"> <%=listing.body%></p>
-
-
     <a class="btn btn-light" href='pages/<%=listing.id%>/edit' rel="nofollow">Edit</a>  
     <a class="btn btn-danger" href='pages/<%=listing.id%>' rel="nofollow" 
     data-method="delete" data-confirm="Are you sure?">Delete</a>    
-
-    
     </div>
 </div>
 </div>
 <% end %>
 </div> 
 </div>
+<script>
+$('.li-modal').on('click', function(e){
+  e.preventDefault();
+  $('#exampleModalCenter').modal('show').find('.modal-content').load($(this).attr('href'));
+});
+</script>
+</body>
 
+
+</html>
