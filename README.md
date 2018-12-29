@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+Name: Cheng Lit Yaw
+Matriculation Number: A0185639M
 
 * Ruby version
+ruby 2.5.3p105 (2018-10-18 revision 65156) [x86_64-darwin18]
 
-* System dependencies
+* Rails version
+Rails 5.2.2
 
-* Configuration
+* Default Startup Screen
+![](app/images/defaultscreen.png)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
