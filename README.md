@@ -10,5 +10,4 @@ ruby 2.5.3p105 (2018-10-18 revision 65156) [x86_64-darwin18]
 Rails 5.2.2
 
 * Default Startup Screen
-![](app/images/defaultscreen.png)
-
+![](app/assets/images/defaultscreen.png)
