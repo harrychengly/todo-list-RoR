@@ -1,64 +1,74 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Todo List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Todo List</title>
 </head>
 
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-<form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
-<div class = "form-group">
-<%= link_to 'Create New Category', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary'}  %>
-  <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
+    <div class = "form-group">
+      <%= link_to 'Create New Category', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary'}  %>
+      <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document"> 
       <div class="modal-content"></div>
-    </div>
-  </div>
-</div>
-</form>
+      </div>
+      </div>
+      </div>
+  </form>
 </nav>
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Categories</h3>
+        </div>
+        <ul class="list-unstyled components">     
+            <% @listings.select("DISTINCT(category)").each do |listing| %>           
+            <li>
+                <%= link_to listing.category, pages_path(category: listing.category)%>
+               <!-- <a href='pages/<%=listing.category%>/show'> <%=listing.category%></a>-->
+            </li>
+            <% end %>
+          </ul>
+    </nav>
 
 
 <div class = "container">
-<h1>Hello User, what do you have today?</h1>
-<form accept-charset="UTF-8" method='post' action='pages/'>
-<div class = "form-group">
-<%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }, { prompt: "Select Category" }, {:class=>"form-control form-control-lg"})%>
-<input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Something...">
-<button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
-</div>
-</form>
-</div> 
-
-
-
-<div class= "container" style="margin-top:100px;">
-<div class="row">
-<% @listings.each do |listing| %>
-  <div class = "col-sm-4">
-<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-  <div class="card-header"> <%=listing.category%> </div>
-  <div class="card-body">
-    <input type="checkbox" class="strikethrough" aria-label="Checkbox for following text input">
-    <span><p class="card-text"> <%=listing.body%></p></span>
-    <a class="btn btn-light" href='pages/<%=listing.id%>/edit' rel="nofollow">Edit</a>  
-    <a class="btn btn-danger" href='pages/<%=listing.id%>' rel="nofollow" 
-    data-method="delete" data-confirm="Are you sure?">Delete</a>
+  <h1>Hello User, what do you have today?</h1>
+  <form accept-charset="UTF-8" method='post' action='pages/'>
+    <div class = "form-group"> 
+      <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }.uniq, { prompt: "Select Category" }, {:class=>"form-control form-control-lg"})%>
+      <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Something...">
+      <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
     </div>
-</div>
-</div>
-<% end %>
+  </form>
+
+  <div class=container-list>
+      <% @body.each do |body| %>
+      <div class="list-group">
+          
+          <a href="#" class="list-group-item list-group-item-dark list-group-item-action"><%=body.body%></a>
+        </div>
+        <% end %>
+  </div>
+
+  
 </div> 
+
+
+
+
+
+
 </div>
-<script>
-$('.li-modal').on('click', function(e){
-  e.preventDefault();
-  $('#exampleModalCenter').modal('show').find('.modal-content').load($(this).attr('href'));
-});
-</script>
+
 </body>
-
-
 </html>

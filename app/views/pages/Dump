@@ -1,0 +1,64 @@
+<!--
+  <div class="row">
+  <% @listings.each do |listing| %>
+    <div class = "col-sm-4">
+      <div class="card bg-light mb-3" style="width: 18rem;">
+          <div class="card-header"> <%=listing.category%> 
+
+
+            <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span>  <%=render :partial => 'svg/option_logo'%></span></button>
+            <div class="dropdown-menu">
+                <li>
+                  <a class="btn btn-light dropdown-item" href='pages/<%=listing.id%>/edit' rel="nofollow">Edit</a>  
+                </li>
+                <li>
+                  <a class="btn btn-danger dropdown-item" href='pages/<%=listing.id%>' rel="nofollow" data-method="delete" data-confirm="Are you sure?">Delete</a>
+                </li>
+            </div>
+
+
+
+          </div>
+            <div class="card-body">
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action"><span><p class="card-text"> <%=listing.body%></p></span>
+                    </a>
+                  </div>
+              <input type="checkbox" class="strikethrough" aria-label="Checkbox for following text input">
+              <span><p class="card-text"> <%=listing.body%></p></span>
+            </div>
+      </div>
+    </div>
+  <% end %>
+  </div> 
+</div>
+-->
+
+/// accordion
+
+
+<div class= "container" style="margin-top:100px;">
+    <% @listings.each do |listing| %>
+    <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <%=listing.category%>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <%=listing.category%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+  </div>
+
+
+      listing = Listing.find(params[:category])

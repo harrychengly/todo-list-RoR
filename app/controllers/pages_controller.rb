@@ -8,7 +8,12 @@ class PagesController < ApplicationController
   end
 
   def index
-    @listings = Listing.order('created_at DESC');
+    if params.has_key?(:category)
+    @body = Listing.select('body').where(category: params[:category]);
+    else
+      @body = Listing.select('body').where(category: params[:category]);
+    end
+    @listings = Listing.all;
   end
 
   def show 
