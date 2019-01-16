@@ -2,7 +2,7 @@
 <h1>Edit Listing</h1> 
 <form accept-charset="UTF-8" action="/pages/<%=@listing.id%>" method="post">
 <input type="hidden" name="_method" value="patch"/>
-<input id='listing_category' name='listing[category]' class="form-control form-control-lg" type="text" value="<%=@listing.category%>" >
+<input id='listing_category' name='listing[category]' class="form-control form-control-lg" type="text" value="<%=@listing.category%>">
 <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" value="<%=@listing.body%>">
 <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
 </form>

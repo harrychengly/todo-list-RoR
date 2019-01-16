@@ -9,9 +9,9 @@ class PagesController < ApplicationController
 
   def index
     if params.has_key?(:category)
-    @body = Listing.select('body').where(category: params[:category]);
+    @listingbody = Listing.select('body, id').where(category: params[:category]);
     else
-      @body = Listing.select('body').where(category: params[:category]);
+      @listingbody = Listing.select('body, id').where(category: params[:category]);
     end
     @listings = Listing.all;
   end
@@ -24,9 +24,9 @@ def create
     listing = Listing.new(listing_params)
 
     if listing.save
-        redirect_to root_path
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to root_path
+      redirect_back(fallback_location: root_path)
     end
 
 end
@@ -41,8 +41,8 @@ end
 def destroy 
     listing = Listing.find(params[:id])
     listing.destroy
-    redirect_to root_path
-end
+    redirect_back(fallback_location: root_path)
+  end
 
 def edit 
     @listing = Listing.find(params[:id])

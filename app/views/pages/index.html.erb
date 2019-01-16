@@ -34,7 +34,6 @@
             <% @listings.select("DISTINCT(category)").each do |listing| %>           
             <li>
                 <%= link_to listing.category, pages_path(category: listing.category)%>
-               <!-- <a href='pages/<%=listing.category%>/show'> <%=listing.category%></a>-->
             </li>
             <% end %>
           </ul>
@@ -52,23 +51,30 @@
   </form>
 
   <div class=container-list>
-      <% @body.each do |body| %>
       <div class="list-group">
-          
-          <a href="#" class="list-group-item list-group-item-dark list-group-item-action"><%=body.body%></a>
+          <% @listingbody.each do |listing| %>
+              <label class="btn btn-secondary list-group-item list-group-item-action">
+                <input type="checkbox" class="strikethrough"> <span><%=listing.body%></span> 
+                <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>  <%=render :partial => 'svg/option_logo'%></span></button>
+                    <div class="dropdown-menu">
+                        <li>
+                          <a class="btn btn-light dropdown-item" href="pages/<%=listing.id%>/edit" rel="nofollow">Edit</a>  
+                        </li>
+                        <li>
+                          <a class="btn btn-warning dropdown-item" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Are you sure to delete <%=listing.body%>?">Delete</a>
+                        </li>
+                      </div>
+              </label>
+              <% end %>
+            </div>
         </div>
-        <% end %>
+
   </div>
 
   
 </div> 
 
-
-
-
-
-
 </div>
-
 </body>
 </html>
