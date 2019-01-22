@@ -3,7 +3,6 @@ class CreateListings < ActiveRecord::Migration[5.2]
     create_table :listings do |t|
       t.string :category
       t.text :body
-
       t.timestamps
     end
   end

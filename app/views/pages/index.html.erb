@@ -54,7 +54,9 @@
       <div class="list-group">
           <% @listingbody.each do |listing| %>
               <label class="btn btn-secondary list-group-item list-group-item-action">
-                <input type="checkbox" class="strikethrough"> <span><%=listing.body%></span> 
+                
+                <a class="btn btn-success" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Completed <%=listing.body%>?">Done</a>
+                <span><%=listing.body%></span> 
                 <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>  <%=render :partial => 'svg/option_logo'%></span></button>
                     <div class="dropdown-menu">
@@ -76,5 +78,6 @@
 </div> 
 
 </div>
+
 </body>
 </html>
