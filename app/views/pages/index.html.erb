@@ -2,117 +2,138 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Todo List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Todo List</title>
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1">Daily Tasks</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <button type="button" id="sidebarCollapse" class="btn btn-info btn-md">View lists</button>
         </li>
 
-
         <li class="nav-item">
-        <form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
-         <div class = "form-group">
-            <button class='btn btn-primary' id="newList">
+          <form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
+            <div class="form-group">
+              <button class='btn btn-primary' id="newList">
                 <%= link_to 'Create new list', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
-            </button>
-            <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document"> 
-            <div class="modal-content">
+              </button>
+              <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                  </div>
+                </div>
+              </div>
             </div>
-            </div>
-            </div>
-            </div>
-        </form>
-      </li>
-    </ul>
+          </form>
+        </li>
 
-      </div>    
+      </ul>
+    </div>
+  </nav>
+  <!-- End of navbar -->
 
-</nav>
-
-<div class="wrapper">
+  <div class="wrapper">
 
     <!-- Sidebar -->
     <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>Lists</h3>
-        </div>
-        <ul class="list-unstyled components">     
+      <div class="sidebar-header">
+        <h3>Lists</h3>
+      </div>
+      <ul class="list-unstyled components">
+        <li>
+          <%= link_to "All tasks", root_path %>
+        </li>
+        <% @listings.select("DISTINCT(category)").each do |listing| %>
           <li>
-              <%= link_to "All tasks", root_path %>
-            </li>
-            <% @listings.select("DISTINCT(category)").each do |listing| %>           
-            <li>
-                <%= link_to listing.category, pages_path(category: listing.category)%>
-            </li>
-            <% end %>
-          </ul>
+            <%= link_to listing.category, pages_path(category: listing.category)%>
+          </li>
+          <% end %>
+      </ul>
     </nav>
+    <!-- End of sidebar -->
 
 
-<div class = "container">
-  <div class="add-task-container">
-  <h1>Hello, what do you have today?</h1>
-  <form accept-charset="UTF-8" method='post' action='pages/'>
-    <div class = "form-group"> 
-      <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }.uniq, { prompt: "Add to a list" }, {:class=>"form-control form-control-lg"})%>
-      <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Add a task">
-      <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Add Task</button>
-    </div>
-  </form>
-</div>
+    <div class="container">
+      <!-- Add task -->
+      <div class="add-task-container">
+        <h1>Hello, what do you have today?</h1>
+        <form accept-charset="UTF-8" method='post' action='pages/'>
+          <div class="form-group">
+            <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }.uniq, { prompt: "Add to a list" }, {:class=>"form-control form-control-lg"})%>
+              <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Add a task">
+              <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Save</button>
+          </div>
+        </form>
+      </div>
+      <!-- End of add task -->
 
-  <div class=container-list>
-      <div class="list-group">
-          <h2><%=@category%></h2>
+      <div class=container-list>
+        <div class="list-group">
+          <h2>
+            <%=@category%>
+          </h2>
           <% @listingbody.each do |listing| %>
-              <label class="btn btn-secondary list-group-item list-group-item-action">
-                <a class="btn btn-success" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Completed <%=listing.body%>?">Done</a>
-                <span><%=listing.body%></span> 
-                <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span>  <%=render :partial => 'svg/option_logo'%></span></button>
-                    <div class="dropdown-menu">
-                        <li>
-                          <a class="btn btn-light dropdown-item" href="pages/<%=listing.id%>/edit" rel="nofollow">Edit</a>  
-                        </li>
-                        <li>
-                          <a class="btn btn-warning dropdown-item" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Are you sure to delete <%=listing.body%>?">Delete</a>
-                        </li>
-                      </div>
-              </label>
-              <% end %>
-            </div>
+            <!-- Edit modal -->
+            <form accept-charset="UTF-8" action="pages/<%=listing.id%>" class="form-inline" method="post">
+              <div class="form-group">
+                <div id='edit-window' class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- End of edit modal -->
+
+            <!-- Task list -->
+            <label class="btn btn-secondary list-group-item list-group-item-action">
+              <a class="btn btn-success" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Completed <%=listing.body%>?">Done</a>
+              <span>
+                <%=listing.body%>
+              </span>
+              <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>
+                  <%=render :partial => 'svg/option_logo'%>
+                </span>
+              </button>
+
+              <!-- Options dropdown -->
+              <div class="dropdown-menu">
+                <li>
+                  <%= link_to 'Edit task', edit_page_path(listing.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#edit-window', :class => 'dropdown-item list-group-item-action'}%>
+                </li>
+                <li>
+                  <a class="dropdown-item list-group-item-danger" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Are you sure to delete <%=listing.body%>?">Delete</a>
+                </li>
+              </div>
+              <!-- End of options dropdown -->
+            </label>
+            <!-- End of task list -->
+            <% end %>
         </div>
-
+      </div>
+    </div>
   </div>
-
-  
-</div> 
-
-</div>
-
-
-<script>
-
-$(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
+  <script>
+    $(document).ready(function () {
+      $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
+      });
     });
-});
-</script>
+  </script>
 </body>
+
 </html>

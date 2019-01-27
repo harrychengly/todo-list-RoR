@@ -47,13 +47,17 @@ def destroy
   end
 
 def edit 
+  respond_to do |format|
+    format.html
+    format.js
+  end
     @listing = Listing.find(params[:id])
 end
 
 def update
     listing = Listing.find(params[:id])
     listing.update_attributes(listing_params)
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
 end
 
 private 
