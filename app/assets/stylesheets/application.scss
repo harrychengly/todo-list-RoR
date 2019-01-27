@@ -3,90 +3,120 @@
 a,
 a:hover,
 a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
 }
 
-.strikethrough:checked + span{
-    text-decoration:line-through
-  }
+.strikethrough:checked + span {
+  text-decoration: line-through;
+}
 
 .wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
+  display: flex;
+  width: 100%;
+  align-items: stretch;
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #7386D5;
-    color: #fff;
-    transition: all 0.3s;
+  min-width: 250px;
+  max-width: 250px;
+  background: #7386d5;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebarCollapse {
+  margin-right: 10px;
 }
 
 #sidebar.active {
-    margin-left: -250px;
+  margin-left: -250px;
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: #6d7fcc;
+  padding: 20px;
+  background: #6d7fcc;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+  padding: 20px 0;
+  border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
-    color: #fff;
-    padding: 10px;
+  color: #fff;
+  padding: 10px;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+  color: #7386d5;
+  background: #fff;
 }
 
-#sidebar ul li.active>a,
+#sidebar ul li.active > a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+  color: #fff;
+  background: #6d7fcc;
 }
 
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #6d7fcc;
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6d7fcc;
 }
 
 .container {
+  width: 100%;
+  padding: 40px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+.add-task-container {
+  padding-bottom: 20px;
+}
+
+.container-list {
+  margin-top: 8%;
+}
+
+@media (max-width: 768px) {
+  .container {
     width: 100%;
     padding: 40px;
     min-height: 100vh;
     transition: all 0.3s;
-}
+  }
 
-.container-list{
+  .container-list {
     margin-top: 8%;
-}
+  }
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
 
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
+  #sidebarCollapse {
+    margin-top: 5%;
+    text-align: center;
+    margin-bottom: 5%;
+    width: 100%;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+  #newList {
+    text-align: center;
+    width: 100%;
+  }
 }

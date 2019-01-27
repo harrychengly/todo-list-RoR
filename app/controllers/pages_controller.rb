@@ -9,9 +9,11 @@ class PagesController < ApplicationController
 
   def index
     if params.has_key?(:category)
-    @listingbody = Listing.select('body, id').where(category: params[:category]);
+    @listingbody = Listing.select('body, id, category').where(category: params[:category]);
+    @category = params[:category];
     else
-      @listingbody = Listing.select('body, id').where(category: params[:category]);
+      @listingbody = Listing.select('body, id, category');
+      @category = "All tasks";
     end
     @listings = Listing.all;
   end

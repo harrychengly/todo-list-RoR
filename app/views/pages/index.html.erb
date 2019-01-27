@@ -10,17 +10,38 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-  <form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
-    <div class = "form-group">
-      <%= link_to 'Create New Category', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary'}  %>
-      <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document"> 
-      <div class="modal-content"></div>
-      </div>
-      </div>
-      </div>
-  </form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">Daily Tasks</span>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button type="button" id="sidebarCollapse" class="btn btn-info btn-md">View lists</button>
+        </li>
+
+
+        <li class="nav-item">
+        <form accept-charset="UTF-8" method='post' action='pages/' class="form-inline">
+         <div class = "form-group">
+            <button class='btn btn-primary' id="newList">
+                <%= link_to 'Create new list', new_page_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
+            </button>
+            <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document"> 
+            <div class="modal-content">
+            </div>
+            </div>
+            </div>
+            </div>
+        </form>
+      </li>
+    </ul>
+
+      </div>    
+
 </nav>
 
 <div class="wrapper">
@@ -28,9 +49,12 @@
     <!-- Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Categories</h3>
+            <h3>Lists</h3>
         </div>
         <ul class="list-unstyled components">     
+          <li>
+              <%= link_to "All tasks", root_path %>
+            </li>
             <% @listings.select("DISTINCT(category)").each do |listing| %>           
             <li>
                 <%= link_to listing.category, pages_path(category: listing.category)%>
@@ -41,20 +65,22 @@
 
 
 <div class = "container">
-  <h1>Hello User, what do you have today?</h1>
+  <div class="add-task-container">
+  <h1>Hello, what do you have today?</h1>
   <form accept-charset="UTF-8" method='post' action='pages/'>
     <div class = "form-group"> 
-      <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }.uniq, { prompt: "Select Category" }, {:class=>"form-control form-control-lg"})%>
-      <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Something...">
-      <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Submit</button>
+      <%=select("listing", "category", Listing.all.collect {|l| [ l.category ] }.uniq, { prompt: "Add to a list" }, {:class=>"form-control form-control-lg"})%>
+      <input id='listing_body' name='listing[body]' class="form-control form-control-lg" type="text" placeholder="Add a task">
+      <button type='submit' class="btn btn-primary" style="float: right; margin-top : 20px;">Add Task</button>
     </div>
   </form>
+</div>
 
   <div class=container-list>
       <div class="list-group">
+          <h2><%=@category%></h2>
           <% @listingbody.each do |listing| %>
               <label class="btn btn-secondary list-group-item list-group-item-action">
-                
                 <a class="btn btn-success" href="pages/<%=listing.id%>" rel="nofollow" data-method="delete" data-confirm="Completed <%=listing.body%>?">Done</a>
                 <span><%=listing.body%></span> 
                 <button class="btn btn-link float-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,5 +105,14 @@
 
 </div>
 
+
+<script>
+
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
+</script>
 </body>
 </html>
